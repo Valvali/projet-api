@@ -9,7 +9,7 @@
       <button class="actualise" @click="ping">test</button>
 
       <router-link to="/signin">Se connecter</router-link>
-      <router-link to="/signin">S'inscrire</router-link>
+      <router-link to="/signup">S'inscrire</router-link>
     </div>
 
 
