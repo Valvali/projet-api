@@ -1,15 +1,20 @@
 <template>
- 
+  <div class="wrapper">
+    <top-bar></top-bar>
+    <section>
+      <router-view></router-view>
+    </section>
+  </div>
 </template>
 
 <script>
-import Signin from './components/Signin'
+import TopBar from './components/TopBar'
 
 
 export default {
   name: 'App',
   components: {
-    Signin
+    TopBar
   }
 }
 </script>
