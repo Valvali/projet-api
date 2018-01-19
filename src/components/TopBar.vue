@@ -58,9 +58,7 @@ export default {
 header {
   background-color: #2E0854	;
   padding: 10px;
-  margin: -10px -10px 10px -10px;
-
-  width: calc( 100% + 2 * 10px );
+  margin: -10px -8px 10px -8px;
 }
 header * {
   color: white;
