@@ -1,11 +1,8 @@
 <template>
 	<div class="center">
-		<form v-on:submit="NewUser" action="#">
+		<form v-on:submit="connection" action="#">
 	    <label for="name">Indiquer votre nom complet</label><br>
 			<input type="text" v-model="name" placeholder="your name"><br>
-
-			<label for="email">Indiquer votre courriel</label><br>
-			<input type="email" v-model="email" placeholder="example@domain.com"><br>
 
 			<label for="password">Indiquer votre mot de passe</label><br>
 			<input type="text" v-model="password" placeholder="Qd4ma39£fb"><br>
@@ -19,15 +16,15 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Signin',
+  name: 'Signup',
   data () {
     return {
 
     }
   },
 	methods: {
-    NewUser () {
-			if(this.name != "" 	 || this.email != ""  || this.password != ""  ){
+    connection () {
+			if(this.name != "" 	 || this.email != ""  ){
 				alert("ok")
 				//post coop & get token to push in localstrorage
 			}
