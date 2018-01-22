@@ -17,7 +17,7 @@
 import api from '@/services/api'
 
 export default {
-	
+
 
 	data () {
 		return {
@@ -27,7 +27,7 @@ export default {
 	methods: {
 		signin () {
 			this.$store.dispatch('auth/login', this.user).then(response => {
-				this.$router.push({name: "home"})
+				this.$router.push({name: "chat"})
 			})
 		}
 	}
