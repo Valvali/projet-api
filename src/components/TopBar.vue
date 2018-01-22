@@ -18,6 +18,7 @@
 
 <script>
 import Vue from 'vue'
+import api from '@/services/api'
 
 export default {
   name: 'App',
@@ -30,7 +31,7 @@ export default {
 	},
   methods: {
     ping () {
-        this.$http.get('http://coop.api.netlor.fr/api/ping' ,  {headers: {'Authorization': 'Token token=3ad23921113a4c2b840575b2d3f4c6b2'}} ).then(response => {
+        api.get('/ping').then(response => {
           // success callback
           console.log(response.message)
           this.message = response.status
