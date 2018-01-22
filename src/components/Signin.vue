@@ -1,11 +1,11 @@
 <template>
 	<div class="center">
-		<form v-on:submit="connection" action="#">
-	    <label for="name">Indiquer votre nom complet</label><br>
-			<input type="text" v-model="name" placeholder="your name"><br>
+		<form @submit.prevent="signin()">
+	    <label for="name">Indiquer votre mail</label><br>
+			<input type="text" v-model="user.email" placeholder="mail"><br>
 
 			<label for="password">Indiquer votre mot de passe</label><br>
-			<input type="text" v-model="password" placeholder="Qd4ma39£fb"><br>
+			<input type="text" v-model="user.password" placeholder="Qd4ma39£fb"><br>
 
 			<button type="submit">valider</button>
 		</form>
@@ -14,23 +14,25 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
-  name: 'Signup',
-  data () {
-    return {
+import api from '@/services/api'
 
-    }
-  },
+export default {
+	
+
+	data () {
+		return {
+			user:{mail: "", password: ""}
+		}
+	},
 	methods: {
-    connection () {
-			if(this.name != "" 	 || this.email != ""  ){
-				alert("ok")
-				//post coop & get token to push in localstrorage
-			}
-    }
-  },
+		signin () {
+			this.$store.dispatch('auth/login', this.user).then(response => {
+				this.$router.push({name: "home"})
+			})
+		}
+	}
 }
+
 </script>
 
 <style scoped>

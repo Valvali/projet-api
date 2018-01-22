@@ -1,8 +1,7 @@
 <template>
-  <div class="wrapper">
-    <top-bar></top-bar>
-      <chat></chat>
-    <!--  <router-view></router-view> -->
+  <div id="app">
+    
+    <router-view/>
   </div>
 </template>
 
@@ -13,10 +12,6 @@ import Chat from './components/Chat'
 
 export default {
   name: 'App',
-  components: {
-    TopBar,
-    Chat
-  }
 }
 </script>
 
