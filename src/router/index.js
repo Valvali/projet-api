@@ -4,6 +4,8 @@ import Signin from '@/components/Signin'
 import Signup from '@/components/Signup'
 import Home from '@/components/Home'
 import store from '@/store'
+import Chat from '@/components/Chat'
+import TopBar from '@/components/TopBar'
 
 Vue.use(Router)
 
@@ -22,7 +24,18 @@ export const router = new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: Signup
+      component: Signup,
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: Chat,
+      children: [
+        {
+          path: 'TopBar',
+          component: TopBar
+        }
+        ]
     }
   ]
 })
