@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    
+    <TopBar/>
     <router-view/>
   </div>
 </template>
@@ -12,6 +12,9 @@ import Chat from './components/Chat'
 
 export default {
   name: 'App',
+  components:{
+    'TopBar': TopBar,
+  },
 }
 </script>
 

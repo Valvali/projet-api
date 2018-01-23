@@ -7,9 +7,6 @@
 
       <span class="status">État : {{message}}</span>
       <button class="actualise" @click="ping">test</button>
-
-      <router-link to="/signin">Se connecter</router-link>
-      <router-link to="/signup">S'inscrire</router-link>
     </div>
 
 
@@ -60,11 +57,12 @@ header {
   background-color: #2E0854	;
   padding: 10px;
   margin: -10px -8px 10px -8px;
+  text-align: left;
 }
 header * {
   color: white;
   margin: 15px;
-  display:inline;
+  display: inline;
 }
 
 header h1{
