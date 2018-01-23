@@ -15,8 +15,8 @@ export const router = new Router({
   routes: [
     {
     	path: '/',
-    	name: 'home',
-    	component: Home,
+    	name: 'Chat',
+    	component: Chat,
     },
     {
       path: '/signin',
@@ -28,22 +28,13 @@ export const router = new Router({
       name: 'signup',
       component: Signup,
     },
+
     {
       path: '/signout',
       name: 'signout',
       component: Signout,
-    },
-    {
-      path: '/chat',
-      name: 'chat',
-      component: Chat,
-      children: [
-        {
-          path: 'TopBar',
-          component: TopBar
-        }
-        ]
     }
+
   ]
 })
 

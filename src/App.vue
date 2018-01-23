@@ -26,7 +26,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-body, html, .wrapper{
+body, html, .wrapper, #app{
   height:100%;
 }
 </style>
