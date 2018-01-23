@@ -8,7 +8,7 @@
 			<input type="email" v-model="email" placeholder="example@domain.com"><br>
 
 			<label for="password">Indiquer votre mot de passe</label><br>
-			<input type="text" v-model="password" placeholder="Qd4ma39£fb"><br>
+			<input type="password" v-model="password"><br>
 
 			<button type="submit">valider</button>
 		</form>

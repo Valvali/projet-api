@@ -5,7 +5,8 @@
 			<input type="text" v-model="user.email" placeholder="mail"><br>
 
 			<label for="password">Indiquer votre mot de passe</label><br>
-			<input type="text" v-model="user.password" placeholder="Qd4ma39£fb"><br>
+			<input type="password" v-model="user.password" ><br>
+			
 
 			<button type="submit">valider</button>
 		</form>
