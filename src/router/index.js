@@ -6,6 +6,8 @@ import Home from '@/components/Home'
 import store from '@/store'
 import Chat from '@/components/Chat'
 import TopBar from '@/components/TopBar'
+import Signout from '@/components/Signout'
+
 
 Vue.use(Router)
 
@@ -25,6 +27,11 @@ export const router = new Router({
       path: '/signup',
       name: 'signup',
       component: Signup,
+    },
+    {
+      path: '/signout',
+      name: 'signout',
+      component: Signout,
     },
     {
       path: '/chat',
