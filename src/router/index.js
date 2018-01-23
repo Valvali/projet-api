@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Signin from '@/components/Signin'
-import Signup from '@/components/Signup'
 import Home from '@/components/Home'
 import store from '@/store'
 import Chat from '@/components/Chat'
@@ -22,11 +21,6 @@ export const router = new Router({
       path: '/signin',
       name: 'signin',
       component: Signin,
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: Signup,
     },
 
     {
