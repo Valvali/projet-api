@@ -5,8 +5,9 @@
     <h1>Dismorv</h1>
     <div class="info">
 
-      <span class="status">État : {{message}}</span>
-      <button class="actualise" @click="ping">test</button>
+      <span class="status" v-if="service" style="color : #00ff6b" >État : online </span> <!-- green -->
+      <span class="status" v-else         style="color : #ff3a09">   État : {{message}}</span> <!-- red -->
+
       <a v-on:click='signout'>Déconnexion</a>
 
     </div>
@@ -25,36 +26,30 @@ export default {
     return {
 	    service: false,
       message: "",
-      color: "green"
 		};
 	},
   methods: {
-    ping () {
-        api.get('/ping').then(response => {
-          // success callback
-          console.log(response.message)
-          this.message = response.status
-          this.service = true
-          this.color = "green"
-
-        }, response => {
-          // error callback
-          console.log(response.message)
-          this.message = response.status
-          this.service = false
-          this.color = "red"
-
-        })
-    },
-
     signout () {
   		this.$store.dispatch('auth/logout', this.user).then(response => {
   			this.$router.push({name: "signin"})
       })
     }
   },
-  computed: {
-  },
+  created: function () {
+        api.get('/ping').then(response => {
+          // success callback
+          console.log(response.message)
+          this.message = response.message
+          this.service = true
+        }, response => {
+          // error callback
+          console.log(response.message)
+          this.message = response.message
+          this.service = false
+
+        })
+  }
+
 }
 </script>
 
@@ -77,7 +72,7 @@ header h1{
 }
 
 .info{
-  vertical-align: center;
+  padding-top: 1%;
   margin: 0;
   display: inline;
   float: right;
