@@ -15,7 +15,7 @@ export const router = new Router({
   routes: [
     {
     	path: '/',
-    	name: 'Chat',
+    	name: 'chat',
     	component: Chat,
     },
     {

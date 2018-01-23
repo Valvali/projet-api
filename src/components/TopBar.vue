@@ -7,6 +7,8 @@
 
       <span class="status">État : {{message}}</span>
       <button class="actualise" @click="ping">test</button>
+      <a v-on:click='signout'>Déconnexion</a>
+
     </div>
 
 
@@ -43,6 +45,12 @@ export default {
           this.color = "red"
 
         })
+    },
+
+    signout () {
+  		this.$store.dispatch('auth/logout', this.user).then(response => {
+  			this.$router.push({name: "signin"})
+      })
     }
   },
   computed: {
@@ -76,4 +84,8 @@ header h1{
 
 }
 
+a:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
 </style>
