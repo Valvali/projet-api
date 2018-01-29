@@ -20,9 +20,9 @@
 			<div class="chatContent">
 				{{content}}
 			</div>
-			<form class="inputChat"  method="post">
+			<form class="inputChat">
 				<input class="msg" type="text" name="" >
-				<button type="submit" name="button">Send</button>
+				<button type="submit" name="button" v-on:click="postContentChannel('item[3]', 'msg')">Send</button>
 			</form>
 		</div>
 	</div>
@@ -51,7 +51,7 @@ export default {
 			this.title = ""
 			this.channels ;
 
-		  api.get('/channels?token=c661950366d9e7ca6279d8166ecb386241dab849').then(response => {
+		  api.get('/channels?token='+ls.get(['token'])).then(response => {
 				// success callback
 				this.channels = response.data
 
@@ -66,7 +66,7 @@ export default {
 		},
 
 		getContentChannel (IDChannel , titleName, topicName) {
-			api.get('/channels/'+IDChannel+'/posts?token='+ls.get(['token'])).then(response => {
+			api.get('/channels/'+IDChannel+'/posts?token=:'+ls.get(['token'])).then(response => {
 				// success callback
 				this.content = "blablabla"
 				this.topic = topicName
@@ -81,6 +81,12 @@ export default {
 
 			})
 
+		},
+
+		postContentChannel (IDChannel, message) {
+			api.post('/channels/'+IDChannel+'/posts?token=:'+ls.get(['token']), message).then(response => {
+
+			})
 		}
 
   },
