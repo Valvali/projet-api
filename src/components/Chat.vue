@@ -65,13 +65,8 @@ export default {
 			})
 		},
 
-<<<<<<< HEAD
 		getContentChannel (channel , topicName , labelName ) {
 			api.get('/channels/'+channel+'/posts?token='+ls.get(['token'])).then(response => {
-=======
-		getContentChannel (IDChannel , titleName, topicName) {
-			api.get('/channels/'+IDChannel+'/posts?token=:'+ls.get(['token'])).then(response => {
->>>>>>> f93dd06152dc71b99ed57511e42f62d9f53fd6b8
 				// success callback
 				this.content = response
 				this.topic = topicName
