@@ -22,9 +22,9 @@
 					<p><strong>{{getNameUserViaID(item.member_id)}} :</strong> {{item.message}}</p> <!--{{item.member_id}}-->
 				</li>
 			</div>
-			<form class="inputChat">
-				<input class="msg" type="text" name="" >
-				<button type="submit" name="button" v-on:click="postContentChannel('item[3]', 'msg')">Send</button>
+			<form class="inputChat" @submit="postContentChannel( message )">
+				<input class="msg" type="text" v-model="message" >
+				<button type="submit" name="button" >Send</button>
 			</form>
 		</div>
 	</div>
@@ -93,10 +93,11 @@ export default {
 		},
 
 
-		postContentChannel (IDChannel, message) {
-			api.post('/channels/'+IDChannel+'/posts?token=:'+ls.get(['token']), message).then(response => {
+		postContentChannel (message) {
 
-			})
+			api.post('/channels/'+this.currentContentID+'/posts?token='+ls.get(['token']), {"message" :  message}).then(function (response) {
+    				console.log(response);
+  				})
 		},
 
   },
