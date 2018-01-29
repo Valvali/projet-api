@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Signin from '@/components/Signin'
-import Home from '@/components/Home'
+
 import store from '@/store'
 import Chat from '@/components/Chat'
 import TopBar from '@/components/TopBar'
@@ -37,7 +37,6 @@ router.beforeEach((to, from, next) => {
     next({name: 'signin', query: {redirect: to.fullPath}})
   }
   else if (to.name == 'signin' && store.getters['auth/isConnected']) {
-    console.log("test test test")
   	next({name: 'home'})
   }
   else {
