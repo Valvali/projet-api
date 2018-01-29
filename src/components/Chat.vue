@@ -5,9 +5,9 @@
 			<button class="actualiseChannels" @click="getChannel">Actualiser</button>
 			<ul>
 				<li v-for="(item) in channels">
-					<div class="channelTitle" id="item[3]" v-on:click="getContentChannel('item[3]','item[0]' ,'item[1]')">
-						<h4>{{item[0]}}</h4>
-						<p>{{item[1]}}</p>
+					<div class="channelTitle" id="item" v-on:click="getContentChannel('item[3]','item[0]' ,'item[1]')">
+						<h4>{{item.label}}</h4>
+						<!-- <p>{{item}}</p> -->
 
 					</div>
 				</li>
@@ -38,7 +38,7 @@ export default {
   name: 'Chat',
   data () {
     return {
-			channels:[["label1","topic","date","qslkdjvnq"],["label2","topic","date","sqhbdvq"]],
+			channels:[],
 			content: "cliquez sur un salon pour commencer à discuter",
 			title : "",
 			topic : ""
@@ -49,13 +49,13 @@ export default {
 			this.content = ""
 			this.topic = ""
 			this.title = ""
-			this.channels = [];
+			this.channels ;
 
-		  api.get('/channels?token='+ls.get(['token'])).then(response => {
+		  api.get('/channels?token=c661950366d9e7ca6279d8166ecb386241dab849').then(response => {
 				// success callback
-				this.channels.push([response.label, response.topic, response.updated_at])
+				this.channels = response.data
 
-				console.log(this.channels);
+				console.log(response.data);
 
 
 			}, response => {
@@ -66,7 +66,7 @@ export default {
 		},
 
 		getContentChannel (IDChannel , titleName, topicName) {
-			api.get('/channels/'+IDChannel+'/posts?token=:token'+ls.get(['token'])).then(response => {
+			api.get('/channels/'+IDChannel+'/posts?token='+ls.get(['token'])).then(response => {
 				// success callback
 				this.content = "blablabla"
 				this.topic = topicName
@@ -126,7 +126,6 @@ export default {
 		background-color: rgba(153, 204, 255, 0.90);
 	}
 	.channelTitle h4{
-		line-height: 2px;
 	}
 	.chatContent{
 	overflow-y: scroll;
