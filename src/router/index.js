@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Signin from '@/components/Signin'
-import Home from '@/components/Home'
+
 import store from '@/store'
 import Chat from '@/components/Chat'
 import TopBar from '@/components/TopBar'
