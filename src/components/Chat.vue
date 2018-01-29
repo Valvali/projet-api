@@ -5,9 +5,9 @@
 			<button class="actualiseChannels" @click="getChannel">Actualiser</button>
 			<ul>
 				<li v-for="(item) in channels">
-					<div class="channelTitle" id="item" v-on:click="getContentChannel('item[3]','item[0]' ,'item[1]')">
+					<div class="channelTitle" :id='item._id' @click="getContentChannel(item._id , item.label , item.topic)">
 						<h4>{{item.label}}</h4>
-						<!-- <p>{{item}}</p> -->
+					 	<p>{{item.topic}}</p>
 
 					</div>
 				</li>
@@ -41,17 +41,17 @@ export default {
 			channels:[],
 			content: "cliquez sur un salon pour commencer à discuter",
 			title : "",
-			topic : ""
+			topic : "",
     }
   },
 	methods: {
 		getChannel () {
 			this.content = ""
+
 			this.topic = ""
 			this.title = ""
-			this.channels ;
 
-		  api.get('/channels?token=c661950366d9e7ca6279d8166ecb386241dab849').then(response => {
+		  api.get('/channels?token='+ls.get(['token'])).then(response => {
 				// success callback
 				this.channels = response.data
 
@@ -65,18 +65,19 @@ export default {
 			})
 		},
 
-		getContentChannel (IDChannel , titleName, topicName) {
-			api.get('/channels/'+IDChannel+'/posts?token='+ls.get(['token'])).then(response => {
+		getContentChannel (channel , topicName , labelName ) {
+			api.get('/channels/'+channel+'/posts?token='+ls.get(['token'])).then(response => {
 				// success callback
-				this.content = "blablabla"
+				this.content = response
 				this.topic = topicName
-				this.title = titleName
+				this.title = labelName
 
 			}, response => {
 				// error callback
-				this.content += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel nunc vel massa placerat imperdiet ac ut libero. Nunc bibendum elit ac nibh gravida, non efficitur est mattis. Nunc pellentesque, leo nec tempor fermentum, justo magna ullamcorper mi, eget feugiat augue leo sit amet tortor. Sed aliquam, orci eget dapibus condimentum, ante est commodo diam, in commodo enim quam vel felis. Mauris sed purus eget nunc dictum sagittis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi sollicitudin in mi id accumsan. Donec sem massa, feugiat sed volutpat ut, volutpat quis nibh. Curabitur ac lorem sed eros eleifend condimentum ac id tellus. Praesent porta eu ipsum sed cursus. Sed odio turpis, faucibus nec malesuada eget, sollicitudin sit amet felis. Quisque bibendum sapien vel laoreet semper. Fusce ac est non mi gravida eleifend vel vitae enim. Curabitur eget orci vestibulum neque malesuada ornare. Aliquam  hendrerit non "
+				console.log(response)
+				this.content = ""
 				this.topic = topicName
-				this.title = titleName
+				this.title = labelName
 
 
 			})
@@ -84,6 +85,9 @@ export default {
 		}
 
   },
+	created: function () {
+		this.getChannel();
+	}
 }
 </script>
 
@@ -124,8 +128,6 @@ export default {
 	.channelTitle:hover{
 		cursor: pointer;
 		background-color: rgba(153, 204, 255, 0.90);
-	}
-	.channelTitle h4{
 	}
 	.chatContent{
 	overflow-y: scroll;
