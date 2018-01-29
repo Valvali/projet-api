@@ -17,8 +17,10 @@
 			<h1>Discussion</h1>
 			<h2>{{title}}</h2>
 			<p><strong>Topic : </strong>{{topic}}</p>
-			<div class="chatContent">
-				{{content}}
+			<div class="textContent">
+				<li v-for="(item) in content">
+					<p><strong>{{getNameUserViaID(item.member_id)}} :</strong> {{item.message}}</p> <!--{{item.member_id}}-->
+				</li>
 			</div>
 			<form class="inputChat">
 				<input class="msg" type="text" name="" >
@@ -42,6 +44,7 @@ export default {
 			content: "cliquez sur un salon pour commencer à discuter",
 			title : "",
 			topic : "",
+			currentContentID : null
     }
   },
 	methods: {
@@ -55,26 +58,23 @@ export default {
 				// success callback
 				this.channels = response.data
 
-				console.log(response.data);
-
-
 			}, response => {
 				// error callback
 				console.log("error = "+response.message)
-				console.log(ls.get(['token']))
 			})
 		},
 
 		getContentChannel (channel , topicName , labelName ) {
+			this.currentContentID = channel
 			api.get('/channels/'+channel+'/posts?token='+ls.get(['token'])).then(response => {
 				// success callback
-				this.content = response
+				this.content = response.data
 				this.topic = topicName
 				this.title = labelName
 
 			}, response => {
 				// error callback
-				console.log(response)
+				console.log(response.message)
 				this.content = ""
 				this.topic = topicName
 				this.title = labelName
@@ -83,12 +83,21 @@ export default {
 			})
 
 		},
+		getNameUserViaID(id) {
+			let memory = id ;
+			api.get('members/'+id+'/signedin?token='+ls.get(['token'])).then(response => {
+				// success callback
+				console.log(response.data.fullname);
+			})
+			return memory
+		},
+
 
 		postContentChannel (IDChannel, message) {
 			api.post('/channels/'+IDChannel+'/posts?token=:'+ls.get(['token']), message).then(response => {
 
 			})
-		}
+		},
 
   },
 	created: function () {
@@ -143,5 +152,7 @@ export default {
 	.msg{
 		width: 90%
 	}
-
+	.textContent{
+		list-style-type: none;
+	}
 </style>
