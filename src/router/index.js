@@ -37,7 +37,6 @@ router.beforeEach((to, from, next) => {
     next({name: 'signin', query: {redirect: to.fullPath}})
   }
   else if (to.name == 'signin' && store.getters['auth/isConnected']) {
-    console.log("test test test")
   	next({name: 'home'})
   }
   else {
