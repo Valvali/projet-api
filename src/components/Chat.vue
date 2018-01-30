@@ -112,9 +112,15 @@ export default {
 		},
 
 		postNewChannel(label, topic) {
+
+			if(label || topic) {
+				console.log("Error : Empty topic or label")
+			}else {
 			api.post('/channels/?token='+ls.get(['token']), {"label" : label, "topic" : topic}).then(function (response) {
     				console.log(response);
   				})
+
+			}	
 			this.nchannel = ""
 			this.schannel = ""
 		},
