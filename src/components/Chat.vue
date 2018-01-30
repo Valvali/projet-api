@@ -8,11 +8,13 @@
 					<div class="channelTitle" :id='item._id' @click="getContentChannel(item._id , item.label , item.topic)">
 						<h4>{{item.label}}</h4>
 					 	<p>{{item.topic}}</p>
+					 	<button type ="submit" class="deletechannel" name="deletechannel" @click="deleteChannel()">-</button>
 
 					</div>
 				</li>
 			</ul>
-			<form class="newChannel" @submit="postNewChannel(nchannel, schannel)" >
+			<button type="submit" name="showform" @click="switchNewChannel()">Ajout de canal</button>
+			<form v-if="newchannel" class="newChannel" @submit="postNewChannel(nchannel, schannel)" >
 				<input class="nchannel" placeholder="Nom du canal" type="text" v-model='nchannel'>
 				<input class="schannel" placeholder="Sujet du canal" type="text" v-model='schannel'>
 				<button type="submit" name="buttonchannel" >Ajouter un canal</button>
@@ -52,7 +54,8 @@ export default {
 			content: "",
 			title : "",
 			topic : "",
-			currentContentID : null
+			currentContentID : null,
+			newchannel : false
     }
   },
 	methods: {
@@ -111,6 +114,16 @@ export default {
   				})
 			this.label = ""
 			this.topic = ""
+		},
+
+		switchNewChannel() {
+			this.newchannel = !this.newchannel
+		},
+
+		deleteChannel() {
+			api.delete('/channels/'+this.currentContentID+'?token='+ls.get(['token'])).then(function (response) {
+    				console.log(response);
+  				})
 		}
 
   },
@@ -168,5 +181,11 @@ export default {
 	}
 	.textContent{
 		list-style-type: none;
+	}
+
+	.deletechannel{		
+  text-align: center;
+  background-color: red;
+  color: white;
 	}
 </style>
