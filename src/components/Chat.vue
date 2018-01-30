@@ -86,19 +86,20 @@ export default {
 			})
 
 		},
-		getNameUserViaID(id) {
+		async getNameUserViaID(id) {
 			let memory = id ;
-			api.get('members/'+id+'/signedin?token='+ls.get(['token'])).then(response => {
+			await api.get('members/'+id+'/signedin?token='+ls.get(['token'])).then(response => {
 				// success callback
 				//console.log(response.data.fullname);
+				//memory = response.data.fullname
 			})
 			return memory
 		},
 
-		postContentChannel (msg) {
+		async postContentChannel (msg) {
 			if(msg){
 				//need wait the end of the request !!!!!!!!
-				api.post('/channels/'+this.currentContentID+'/posts?token='+ls.get(['token']), {"message" :  msg}).then(function (response) {
+				await api.post('/channels/'+this.currentContentID+'/posts?token='+ls.get(['token']), {"message" :  msg}).then(function (response) {
 	    		console.log(response);
 	  		})
 			}
@@ -110,11 +111,11 @@ export default {
 			this.getContentChannel (this.currentContentID , this.topic , this.title )
 		},
 
-		postNewChannel(label, topic) {
+		async postNewChannel(label, topic) {
 			if(label == "" || topic== "") {
 				console.log("Error : Empty topic or label")
 			}else {
-			api.post('/channels/?token='+ls.get(['token']), {"label" : label, "topic" : topic}).then(function (response) {
+			await api.post('/channels/?token='+ls.get(['token']), {"label" : label, "topic" : topic}).then(function (response) {
     				console.log(response);
   				})
 
@@ -128,8 +129,8 @@ export default {
 			this.newchannel = !this.newchannel
 		},
 
-		deleteChannel(IDchannel) {
-			api.delete('/channels/'+IDchannel+'?token='+ls.get(['token'])).then(function (response) {
+		async deleteChannel(IDchannel) {
+			await api.delete('/channels/'+IDchannel+'?token='+ls.get(['token'])).then(function (response) {
     				console.log(response);
   				})
 			this.refreshContent();
