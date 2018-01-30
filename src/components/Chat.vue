@@ -6,8 +6,8 @@
 			<ul>
 				<li v-for="(item) in channels">
 					<div class="channelTitle" :id='item._id' @click="getContentChannel(item._id , item.label , item.topic)">
-						<h4>{{item.topic}}</h4> <button type ="submit" class="deletechannel" name="deletechannel" @click="deleteChannel()">-</button>
-					 	<p>{{item.label}}</p>
+						<h4>{{item.label}}</h4> <button type ="submit" class="deletechannel" name="deletechannel" @click="deleteChannel(item._id)">-</button>
+					 	<p>{{item.topic}}</p>
 					</div>
 				</li>
 			</ul>
@@ -123,8 +123,8 @@ export default {
 			this.newchannel = !this.newchannel
 		},
 
-		deleteChannel() {
-			api.delete('/channels/'+this.currentContentID+'?token='+ls.get(['token'])).then(function (response) {
+		deleteChannel(IDchannel) {
+			api.delete('/channels/'+IDchannel+'?token='+ls.get(['token'])).then(function (response) {
     				console.log(response);
   				})
 		}
