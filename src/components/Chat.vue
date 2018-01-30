@@ -12,6 +12,12 @@
 					</div>
 				</li>
 			</ul>
+			<button type="submit" name="showform" @click="switchNewChannel()">Ajout de canal</button>
+			<form v-if="newchannel" class="newChannel" @submit="postNewChannel(nchannel, schannel)" >
+				<input class="nchannel" placeholder="Nom du canal" type="text" v-model='nchannel'>
+				<input class="schannel" placeholder="Sujet du canal" type="text" v-model='schannel'>
+				<button type="submit" name="buttonchannel" >Ajouter un canal</button>
+			</form>
 		</div>
 		<div class="right">
 			<h1>Discussion</h1>
@@ -40,12 +46,15 @@ export default {
   name: 'Chat',
   data () {
     return {
+    		nchannel: "",
+    		schannel: "",
 			msg: '',
 			channels:[],
 			content: "",
 			title : "",
 			topic : "",
-			currentContentID : null
+			currentContentID : null,
+			newchannel : false
     }
   },
 	methods: {
@@ -102,6 +111,24 @@ export default {
 			this.getContentChannel (this.currentContentID , this.topic , this.title )
 		},
 
+		postNewChannel(label, topic) {
+			api.post('/channels/?token='+ls.get(['token']), {"label" : label, "topic" : topic}).then(function (response) {
+    				console.log(response);
+  				})
+			this.label = ""
+			this.topic = ""
+		},
+
+		switchNewChannel() {
+			this.newchannel = !this.newchannel
+		},
+
+		deleteChannel() {
+			api.delete('/channels/'+this.currentContentID+'?token='+ls.get(['token'])).then(function (response) {
+    				console.log(response);
+  				})
+		}
+
   },
 	created: function () {
 		this.getChannel();
@@ -157,5 +184,11 @@ export default {
 	}
 	.textContent{
 		list-style-type: none;
+	}
+
+	.deletechannel{
+  text-align: center;
+  background-color: red;
+  color: white;
 	}
 </style>
