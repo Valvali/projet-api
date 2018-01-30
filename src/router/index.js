@@ -5,7 +5,6 @@ import Signin from '@/components/Signin'
 import store from '@/store'
 import Chat from '@/components/Chat'
 import TopBar from '@/components/TopBar'
-import Signout from '@/components/Signout'
 
 
 Vue.use(Router)
@@ -23,11 +22,7 @@ export const router = new Router({
       component: Signin,
     },
 
-    {
-      path: '/signout',
-      name: 'signout',
-      component: Signout,
-    }
+
 
   ]
 })
