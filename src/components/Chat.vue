@@ -22,8 +22,8 @@
 					<p><strong>{{getNameUserViaID(item.member_id)}} :</strong> {{item.message}}</p> <!--{{item.member_id}}-->
 				</li>
 			</div>
-			<form class="inputChat" @submit="postContentChannel( message )">
-				<input class="msg" type="text" v-model="message" >
+			<form class="inputChat" action="#" @submit="postContentChannel( msg )">
+				<input class="msg" type="text" v-model='msg' >
 				<button type="submit" name="button" >Send</button>
 			</form>
 		</div>
@@ -40,8 +40,9 @@ export default {
   name: 'Chat',
   data () {
     return {
+			msg: '',
 			channels:[],
-			content: "cliquez sur un salon pour commencer à discuter",
+			content: "",
 			title : "",
 			topic : "",
 			currentContentID : null
@@ -49,10 +50,6 @@ export default {
   },
 	methods: {
 		getChannel () {
-			this.content = ""
-
-			this.topic = ""
-			this.title = ""
 
 		  api.get('/channels?token='+ls.get(['token'])).then(response => {
 				// success callback
@@ -79,7 +76,6 @@ export default {
 				this.topic = topicName
 				this.title = labelName
 
-
 			})
 
 		},
@@ -87,17 +83,19 @@ export default {
 			let memory = id ;
 			api.get('members/'+id+'/signedin?token='+ls.get(['token'])).then(response => {
 				// success callback
-				console.log(response.data.fullname);
+				//console.log(response.data.fullname);
 			})
 			return memory
 		},
-
-
-		postContentChannel (message) {
-
-			api.post('/channels/'+this.currentContentID+'/posts?token='+ls.get(['token']), {"message" :  message}).then(function (response) {
+		postContentChannel (msg) {
+			api.post('/channels/'+this.currentContentID+'/posts?token='+ls.get(['token']), {"message" :  msg}).then(function (response) {
     				console.log(response);
   				})
+			this.refreshContent();
+			this.msg = ""
+		},
+		refreshContent() {
+			this.getContentChannel (this.currentContentID , this.topic , this.title )
 		},
 
   },
