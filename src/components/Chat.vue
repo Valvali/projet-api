@@ -2,20 +2,21 @@
 	<div class="content">
 		<div class="left">
 			<h1>Salons :</h1>
-			<button class="actualiseChannels" @click="refreshContent">Actualiser</button>
+			<button class="actualiseChannels"@click="refreshContent">Actualiser</button>
 			<ul>
 				<li v-for="(item) in channels">
 					<div class="channelTitle" :id='item._id' @click="getContentChannel(item._id , item.label , item.topic)">
-						<h4>{{item.label}}</h4> <button type ="submit" class="deletechannel" name="deletechannel" @click="deleteChannel(item._id)">-</button>
+						<h4>{{item.label}}</h4>
 					 	<p>{{item.topic}}</p>
 					</div>
+					<button type ="submit" class="deletechannel" @click="deleteChannel(item._id)">-</button>
 				</li>
 			</ul>
-			<button type="submit" name="showform" @click="switchNewChannel()">Ajout de canal</button>
-			<form v-if="newchannel" class="newChannel" @submit="postNewChannel(nchannel, schannel)" >
+			<button type="button" @click="switchNewChannel()">Ajout de canal</button>
+			<form v-if="newchannel"  class="newChannel" @submit="postNewChannel(nchannel, schannel)" >
 				<input class="nchannel" placeholder="Nom du canal" type="text" v-model='nchannel'>
 				<input class="schannel" placeholder="Sujet du canal" type="text" v-model='schannel'>
-				<button type="submit" name="buttonchannel" >Ajouter un canal</button>
+				<button type="submit"  >Ajouter un canal</button>
 			</form>
 		</div>
 		<div class="right">
@@ -27,9 +28,9 @@
 					<p><strong>{{getNameUserViaID(item.member_id)}} :</strong> {{item.message}}</p> <!--{{item.member_id}}-->
 				</li>
 			</div>
-			<form class="inputChat" action="#" @submit="postContentChannel( msg )">
+			<form class="inputChat" @submit="postContentChannel( msg )">
 				<input class="msg" type="text" v-model='msg' >
-				<button type="submit" name="button" >Send</button>
+				<button type="submit" >Send</button>
 			</form>
 		</div>
 	</div>
@@ -58,11 +59,9 @@ export default {
   },
 	methods: {
 		getChannel () {
-
 		  api.get('/channels?token='+ls.get(['token'])).then(response => {
 				// success callback
 				this.channels = response.data
-
 			}, response => {
 				// error callback
 				console.log("error = "+response.message)
@@ -112,17 +111,17 @@ export default {
 		},
 
 		postNewChannel(label, topic) {
-
-			if(label || topic) {
+			if(label == "" || topic== "") {
 				console.log("Error : Empty topic or label")
 			}else {
 			api.post('/channels/?token='+ls.get(['token']), {"label" : label, "topic" : topic}).then(function (response) {
     				console.log(response);
   				})
 
-			}	
+			}
 			this.nchannel = ""
 			this.schannel = ""
+			this.refreshContent();
 		},
 
 		switchNewChannel() {
@@ -133,6 +132,7 @@ export default {
 			api.delete('/channels/'+IDchannel+'?token='+ls.get(['token'])).then(function (response) {
     				console.log(response);
   				})
+			this.refreshContent();
 		}
 
   },
@@ -171,6 +171,8 @@ export default {
 		max-height: 680px;;
 	}
 	.channelTitle{
+		display: inline-block;
+		width:80%;
 		border-style: dotted;
 		border-width: thin;
 		padding-left: 10px;
@@ -196,6 +198,8 @@ export default {
 	}
 
 	.deletechannel{
+		cursor: pointer;
+		vertical-align: top;
 	  text-align: center;
 	  background-color: red;
 	  color: white;
