@@ -38,15 +38,12 @@ export default {
   created: function () {
         api.get('/ping').then(response => {
           // success callback
-          console.log(response.message)
           this.message = response.message
           this.service = true
         }, response => {
           // error callback
-          console.log(response.message)
           this.message = response.message
           this.service = false
-
         })
   }
 

@@ -6,8 +6,8 @@
 			<ul>
 				<li v-for="(item) in channels">
 					<div class="channelTitle" :id='item._id' @click="getContentChannel(item._id , item.label , item.topic)">
-						<h4>{{item.label}}</h4>
-					 	<p>{{item.topic}}</p>
+						<h4>{{item.topic}}</h4>
+					 	<p>{{item.label}}</p>
 
 					</div>
 				</li>
@@ -87,10 +87,14 @@ export default {
 			})
 			return memory
 		},
+
 		postContentChannel (msg) {
-			api.post('/channels/'+this.currentContentID+'/posts?token='+ls.get(['token']), {"message" :  msg}).then(function (response) {
-    				console.log(response);
-  				})
+			if(msg){
+				//need wait the end of the request !!!!!!!!
+				api.post('/channels/'+this.currentContentID+'/posts?token='+ls.get(['token']), {"message" :  msg}).then(function (response) {
+	    		console.log(response);
+	  		})
+			}
 			this.refreshContent();
 			this.msg = ""
 		},
