@@ -2,13 +2,12 @@
 	<div class="content">
 		<div class="left">
 			<h1>Salons :</h1>
-			<button class="actualiseChannels" @click="getChannel">Actualiser</button>
+			<button class="actualiseChannels" @click="refreshContent">Actualiser</button>
 			<ul>
 				<li v-for="(item) in channels">
 					<div class="channelTitle" :id='item._id' @click="getContentChannel(item._id , item.label , item.topic)">
-						<h4>{{item.topic}}</h4>
+						<h4>{{item.topic}}</h4> <button type ="submit" class="deletechannel" name="deletechannel" @click="deleteChannel()">-</button>
 					 	<p>{{item.label}}</p>
-
 					</div>
 				</li>
 			</ul>
@@ -108,6 +107,7 @@ export default {
 			this.msg = ""
 		},
 		refreshContent() {
+			this.getChannel();
 			this.getContentChannel (this.currentContentID , this.topic , this.title )
 		},
 
@@ -115,8 +115,8 @@ export default {
 			api.post('/channels/?token='+ls.get(['token']), {"label" : label, "topic" : topic}).then(function (response) {
     				console.log(response);
   				})
-			this.label = ""
-			this.topic = ""
+			this.nchannel = ""
+			this.schannel = ""
 		},
 
 		switchNewChannel() {
@@ -131,7 +131,7 @@ export default {
 
   },
 	created: function () {
-		this.getChannel();
+		this.refreshContent();
 	}
 }
 </script>
@@ -170,6 +170,9 @@ export default {
 		padding-left: 10px;
 		margin-bottom: 2px;
 	}
+	.channelTitle h4{
+		display: inline;
+	}
 	.channelTitle:hover{
 		cursor: pointer;
 		background-color: rgba(153, 204, 255, 0.90);
@@ -187,8 +190,8 @@ export default {
 	}
 
 	.deletechannel{
-  text-align: center;
-  background-color: red;
-  color: white;
+	  text-align: center;
+	  background-color: red;
+	  color: white;
 	}
 </style>
