@@ -12,6 +12,11 @@
 					</div>
 				</li>
 			</ul>
+			<form class="newChannel" @submit="postNewChannel(nchannel, schannel)" >
+				<input class="nchannel" placeholder="Nom du canal" type="text" v-model='nchannel'>
+				<input class="schannel" placeholder="Sujet du canal" type="text" v-model='schannel'>
+				<button type="submit" name="buttonchannel" >Ajouter un canal</button>
+			</form>
 		</div>
 		<div class="right">
 			<h1>Discussion</h1>
@@ -40,6 +45,8 @@ export default {
   name: 'Chat',
   data () {
     return {
+    		nchannel: "",
+    		schannel: "",
 			msg: '',
 			channels:[],
 			content: "",
@@ -97,6 +104,14 @@ export default {
 		refreshContent() {
 			this.getContentChannel (this.currentContentID , this.topic , this.title )
 		},
+
+		postNewChannel(label, topic) {
+			api.post('/channels/?token='+ls.get(['token']), {"label" : label, "topic" : topic}).then(function (response) {
+    				console.log(response);
+  				})
+			this.label = ""
+			this.topic = ""
+		}
 
   },
 	created: function () {
