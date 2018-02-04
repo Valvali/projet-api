@@ -28,8 +28,8 @@
 					<p><strong>{{getNameUserViaID(item.member_id)}} :</strong> {{item.message}}</p> <!--{{item.member_id}}-->
 				</li>
 			</div>
-			<form class="inputChat" @submit="postContentChannel( msg )">
-				<input class="msg" type="text" v-model='msg' >
+			<form class="inputChat"  @submit="postContentChannel( msg )">
+				<input class="msg" type="text" v-model='msg' :disabled="title == ''" >
 				<button type="submit" >Send</button>
 			</form>
 		</div>
@@ -46,8 +46,8 @@ export default {
   name: 'Chat',
   data () {
     return {
-    		nchannel: "",
-    		schannel: "",
+    	nchannel: "",
+    	schannel: "",
 			msg: '',
 			channels:[],
 			content: "",
@@ -86,13 +86,13 @@ export default {
 			})
 
 		},
-		async getNameUserViaID(id) {
+		/* async */ getNameUserViaID(id) {
 			let memory = id ;
-			await api.get('members/'+id+'/signedin?token='+ls.get(['token'])).then(response => {
+			/*await api.get('members/'+id+'/signedin?token='+ls.get(['token'])).then(response => {
 				// success callback
-				//console.log(response.data.fullname);
-				//memory = response.data.fullname
-			})
+				console.log(response.data.fullname);
+				memory = response.data.fullname    //doesn't work 
+			})*/
 			return memory
 		},
 
